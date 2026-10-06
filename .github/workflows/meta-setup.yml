@@ -1,0 +1,21 @@
+name: Meta kurulum
+
+on:
+  workflow_dispatch:   # sadece elle calistirilir
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Meta WhatsApp kurulum kontrolu
+        env:
+          META_TOKEN: ${{ secrets.META_TOKEN }}
+          META_PHONE_ID: ${{ secrets.META_PHONE_ID }}
+          META_WABA_ID: ${{ secrets.META_WABA_ID }}
+          WA_PHONE: ${{ secrets.WA_PHONE }}
+        run: python setup_meta.py
